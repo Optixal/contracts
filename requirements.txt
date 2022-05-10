@@ -1,2 +1,3 @@
 py-solc-x
 python-dotev
+web3
