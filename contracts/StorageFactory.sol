@@ -7,7 +7,6 @@ import "./SimpleStorage.sol";
 
 // Inheritance with "is", it'll have everything from SimpleStorage
 contract StorageFactory is SimpleStorage {
-    
     SimpleStorage[] public simpleStorageArray;
 
     // Deploys a simple storage contract within this contract
@@ -25,7 +24,7 @@ contract StorageFactory is SimpleStorage {
     }
 
     // Calls the retrieve function in simple storage contract
-    function sfRetrieve(uint256 _simpleStorageIndex) public view returns(uint256) {
+    function sfRetrieve(uint256 _simpleStorageIndex) public view returns (uint256) {
         return SimpleStorage(address(simpleStorageArray[_simpleStorageIndex])).retrieve();
     }
 }

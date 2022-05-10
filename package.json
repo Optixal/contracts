@@ -1,8 +1,8 @@
 {
     "scripts": {
-        "prettier": "prettier --write **/*.sol",
-        "prettier-check": "prettier --check **/*.sol",
-        "solhint": "solhint -f table **/*.sol"
+        "prettier": "prettier --write contracts/**/*.sol",
+        "prettier-check": "prettier --check contracts/**/*.sol",
+        "solhint": "solhint -f table contracts/**/*.sol"
     },
     "devDependencies": {
         "ganache": "^7.1.0",

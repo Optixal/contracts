@@ -7,11 +7,10 @@ pragma solidity >=0.6.0 <0.9.0;
 
 // Like a class
 contract SimpleStorage {
-
     // Initialized to 0
     uint256 favouriteNumber; // index 0
     bool favouriteBool; // index 1
-    
+
     // Structs
     struct People {
         uint256 favouriteNumber; // index 0
@@ -19,14 +18,11 @@ contract SimpleStorage {
     }
 
     // A Person
-    People public person = People({
-        favouriteNumber: 2,
-        name: "Patrick"
-    });
+    People public person = People({favouriteNumber: 2, name: "Patrick"});
 
     // Dynamic Array of People
     People[] public people; // can oso specify fixed size of array with People[5]
-    
+
     // Mapping/Dictionary of People Names to their Favourite Numbers
     mapping(string => uint256) public nameToFavouriteNumber;
 
@@ -46,7 +42,7 @@ contract SimpleStorage {
     }
 
     // View Function: no state change, no transaction
-    function retrieve() public view returns(uint256) {
+    function retrieve() public view returns (uint256) {
         return favouriteNumber;
     }
 
