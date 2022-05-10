@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Read solidity source file
-with open("./SimpleStorage.sol", "r") as f:
+with open("./contracts/SimpleStorage.sol", "r") as f:
     data = f.read()
 
 # Compile
@@ -34,7 +34,7 @@ bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"
 abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # Ganache connection
-w3 = Web3(Web3.HTTPProvider("http://172.25.224.1:7545"))
+w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_CONNECTION")))
 chain_id = 1337
 address = os.getenv("WEB3_PUBLIC_ADDRESS")
 private_key = os.getenv("WEB3_PRIVATE_KEY")

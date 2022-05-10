@@ -2,7 +2,8 @@
     "scripts": {
         "prettier": "prettier --write contracts/**/*.sol",
         "prettier-check": "prettier --check contracts/**/*.sol",
-        "solhint": "solhint -f table contracts/**/*.sol"
+        "solhint": "solhint -f table contracts/**/*.sol",
+        "ganache": "ganache --wallet.seed evm-contracts"
     },
     "devDependencies": {
         "ganache": "^7.1.0",
