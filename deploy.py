@@ -18,11 +18,7 @@ compiled_sol = compile_standard(
     {
         "language": "Solidity",
         "sources": {"SimpleStorage.sol": {"content": data}},
-        "settings": {
-            "outputSelection": {
-                "*": {"*": ["abi", "metadata", "evm.bytecode", "evm.sourceMap"]}
-            }
-        },
+        "settings": {"outputSelection": {"*": {"*": ["abi", "metadata", "evm.bytecode", "evm.sourceMap"]}}},
     },
     solc_version=Version("0.8.13"),
     solc_binary="/usr/bin/solc",
@@ -34,9 +30,7 @@ with open("compiled.json", "w") as f:
     json.dump(compiled_sol, f)
 
 # Extract bytecode and ABI
-bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"][
-    "bytecode"
-]["object"]
+bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"]["bytecode"]["object"]
 abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # Ganache connection
@@ -59,9 +53,7 @@ transaction = simpleStorage.constructor().buildTransaction(
 print(f"Transaction: {transaction}")
 
 # Sign transaction
-signed_transaction = w3.eth.account.sign_transaction(
-    transaction, private_key=private_key
-)
+signed_transaction = w3.eth.account.sign_transaction(transaction, private_key=private_key)
 print(f"Signed Transaction: {signed_transaction}")
 
 # Send transaction
