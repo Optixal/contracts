@@ -8,8 +8,8 @@ pragma solidity >=0.6.0 <0.9.0;
 // Like a class
 contract SimpleStorage {
     // Initialized to 0
-    uint256 favouriteNumber; // index 0
-    bool favouriteBool; // index 1
+    uint256 internal favouriteNumber; // index 0
+    bool internal favouriteBool; // index 1
 
     // Structs
     struct People {
