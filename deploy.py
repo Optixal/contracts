@@ -25,7 +25,6 @@ compiled_sol = compile_standard(
 )
 
 # Save
-print(compiled_sol)
 with open("compiled.json", "w") as f:
     json.dump(compiled_sol, f)
 
@@ -50,14 +49,18 @@ print(f"Nonce: {nonce}")
 transaction = simpleStorage.constructor().buildTransaction(
     {"gasPrice": w3.eth.gasPrice, "chainId": chain_id, "from": address, "nonce": nonce}
 )
-print(f"Transaction: {transaction}")
+print("Transaction Built")
 
 # Sign transaction
 signed_transaction = w3.eth.account.sign_transaction(transaction, private_key=private_key)
-print(f"Signed Transaction: {signed_transaction}")
+print("Signed Transaction")
 
 # Send transaction
 transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 print(f"Transaction Hash: {transaction_hash}")
 transaction_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
 print("Transaction Complete")
+
+###################
+
+
