@@ -35,7 +35,7 @@ abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
 # Ganache connection
 w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_CONNECTION")))
-chain_id = 1337
+chain_id = int(str(os.getenv("WEB3_CHAIN_ID")))
 address = os.getenv("WEB3_PUBLIC_ADDRESS")
 private_key = os.getenv("WEB3_PRIVATE_KEY")
 
