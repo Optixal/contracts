@@ -1,4 +1,5 @@
 .env
+.env.ganache
 .env.rinkeby
 env/
 dev.txt
