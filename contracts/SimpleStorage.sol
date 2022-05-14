@@ -37,8 +37,9 @@ contract SimpleStorage {
     }
 
     // Store a favourite number, has state change
-    function store(uint256 _favoriteNumber) public {
+    function store(uint256 _favoriteNumber) public returns (uint256) {
         favouriteNumber = _favoriteNumber;
+        return _favoriteNumber;
     }
 
     // View Function: no state change, no transaction

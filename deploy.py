@@ -6,6 +6,7 @@ from semantic_version.base import Version
 from solcx import compile_standard
 from web3 import Web3
 from dotenv import load_dotenv
+from web3.types import Nonce
 
 load_dotenv()
 
@@ -59,8 +60,35 @@ print("Signed Transaction")
 transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 print(f"Transaction Hash: {transaction_hash}")
 transaction_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
-print("Transaction Complete")
+print("Transaction Complete. Contract deployed!")
 
 ###################
 
+# Working with contracts require:
+# * Contract ABI
+# * Contract Address
+simple_storage = w3.eth.contract(address=transaction_receipt["contractAddress"], abi=abi)
 
+# 2 ways to interact:
+# * Call -> Simulate making the call and getting a return value
+# * Transact -> Actually make a state change. Can also be performed on views or pure functions
+
+# Call
+print("\nCall (retrieve(), store(15), retrieve()):")
+print(simple_storage.functions.retrieve().call())
+print(simple_storage.functions.store(15).call())
+print(simple_storage.functions.retrieve().call())
+
+# Transact
+print("\nTransact (retrieve(), store(15), retrieve()):")
+print(simple_storage.functions.retrieve().call())
+
+store_transaction = simple_storage.functions.store(15).buildTransaction(
+    {"chainId": chain_id, "from": str(address), "nonce": Nonce(nonce + 1)}
+)  # build
+signed_store_transaction = w3.eth.account.sign_transaction(store_transaction, private_key=private_key) # sign
+store_transaction_hash = w3.eth.send_raw_transaction(signed_store_transaction.rawTransaction) # send
+store_transaction_receipt = w3.eth.wait_for_transaction_receipt(store_transaction_hash) # wait
+print('Stored 15')
+
+print(simple_storage.functions.retrieve().call())
