@@ -5,6 +5,7 @@ import json
 from semantic_version.base import Version
 from solcx import compile_standard
 from web3 import Web3
+from web3.middleware.geth_poa import geth_poa_middleware
 from dotenv import load_dotenv
 from web3.types import Nonce
 
@@ -33,11 +34,18 @@ with open("compiled.json", "w") as f:
 bytecode = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["evm"]["bytecode"]["object"]
 abi = compiled_sol["contracts"]["SimpleStorage.sol"]["SimpleStorage"]["abi"]
 
-# Ganache connection
-w3 = Web3(Web3.HTTPProvider(os.getenv("WEB3_CONNECTION")))
+# Web3 connection
+connection_url = os.getenv("WEB3_CONNECTION")
+w3 = Web3(Web3.HTTPProvider(connection_url))
+# https://web3py.readthedocs.io/en/stable/middleware.html#why-is-geth-poa-middleware-necessary
+w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 chain_id = int(str(os.getenv("WEB3_CHAIN_ID")))
 address = os.getenv("WEB3_PUBLIC_ADDRESS")
 private_key = os.getenv("WEB3_PRIVATE_KEY")
+print(f"Web3 connection:")
+print(f"  * URL: {connection_url}")
+print(f"  * Chain ID: {chain_id}")
+print(f"  * Address being used: {address}")
 
 # Create contract in Python
 simpleStorage = w3.eth.contract(abi=abi, bytecode=bytecode)
@@ -59,6 +67,7 @@ print("Signed Transaction")
 # Send transaction
 transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
 print(f"Transaction Hash: {transaction_hash}")
+print(f"Waiting for transaction to go through...")
 transaction_receipt = w3.eth.wait_for_transaction_receipt(transaction_hash)
 print("Transaction Complete. Contract deployed!")
 
