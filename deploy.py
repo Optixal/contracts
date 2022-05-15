@@ -40,8 +40,8 @@ w3 = Web3(Web3.HTTPProvider(connection_url))
 # https://web3py.readthedocs.io/en/stable/middleware.html#why-is-geth-poa-middleware-necessary
 w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 chain_id = int(str(os.getenv("WEB3_CHAIN_ID")))
-address = os.getenv("WEB3_PUBLIC_ADDRESS")
-private_key = os.getenv("WEB3_PRIVATE_KEY")
+address = str(os.getenv("WEB3_PUBLIC_ADDRESS"))
+private_key = str(os.getenv("WEB3_PRIVATE_KEY"))
 print(f"Web3 connection:")
 print(f"  * URL: {connection_url}")
 print(f"  * Chain ID: {chain_id}")
@@ -93,7 +93,7 @@ print("\nTransact (retrieve(), store(15), retrieve()):")
 print(simple_storage.functions.retrieve().call())
 
 store_transaction = simple_storage.functions.store(15).buildTransaction(
-    {"chainId": chain_id, "from": str(address), "nonce": Nonce(nonce + 1)}
+    {"chainId": chain_id, "from": address, "nonce": Nonce(nonce + 1)}
 )  # build
 signed_store_transaction = w3.eth.account.sign_transaction(store_transaction, private_key=private_key)  # sign
 store_transaction_hash = w3.eth.send_raw_transaction(signed_store_transaction.rawTransaction)  # send
