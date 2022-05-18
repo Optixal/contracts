@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 // Version of solidity, ^0.6.0 is 0.6.x
-pragma solidity >=0.6.0 <0.9.0;
+pragma solidity ^0.8.0;
 
 // All of this gets compiled down to EVM, can deploy on other EVM-compatible chains
 
